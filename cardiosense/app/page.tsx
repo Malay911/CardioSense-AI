@@ -48,13 +48,25 @@ export default function Home() {
     // Pre-warm the Render API
     const preWarmAPI = async () => {
       try {
-        await axios.get('https://cardiosense-ai.onrender.com/api/health');
-        console.log('API pre-warmed successfully');
+        // Use POST with dummy data to exercise the actual prediction logic
+        await axios.post('https://cardiosense-ai.onrender.com/api/predict', {
+          age: '45', gender: '1', height: '175', weight: '70',
+          ap_hi: '120', ap_lo: '80', cholesterol: '1', gluc: '1',
+          smoke: '0', alco: '0', active: '1'
+        });
+        console.log('API heartbeat: Active prediction path pinged');
       } catch (err) {
-        console.log('API pre-warm ping sent (might still be waking up)');
+        console.log('API heartbeat: Ping sent');
       }
     };
+
+    // Initial ping on load
     preWarmAPI();
+
+    // Setup interval to ping every 10 minutes while tab is open
+    const interval = setInterval(preWarmAPI, 10 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, [currentPage]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
