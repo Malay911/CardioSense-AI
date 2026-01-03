@@ -60,6 +60,7 @@ export default function Home() {
     setResult(null);
 
     try {
+            console.log('Sending request to Render:', 'https://cardiosense-ai.onrender.com/api/predict');
       const response = await axios.post('https://cardiosense-ai.onrender.com/api/predict', formData);
       setResult(response.data);
     } catch (err: any) {
