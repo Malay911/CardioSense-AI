@@ -41,9 +41,20 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Scroll to top when page changes
+  // Scroll to top when page changes and pre-warm the API
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Pre-warm the Render API
+    const preWarmAPI = async () => {
+      try {
+        await axios.get('https://cardiosense-ai.onrender.com/api/health');
+        console.log('API pre-warmed successfully');
+      } catch (err) {
+        console.log('API pre-warm ping sent (might still be waking up)');
+      }
+    };
+    preWarmAPI();
   }, [currentPage]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -60,7 +71,7 @@ export default function Home() {
     setResult(null);
 
     try {
-            console.log('Sending request to Render:', 'https://cardiosense-ai.onrender.com/api/predict');
+      console.log('Sending request to Render:', 'https://cardiosense-ai.onrender.com/api/predict');
       const response = await axios.post('https://cardiosense-ai.onrender.com/api/predict', formData);
       setResult(response.data);
     } catch (err: any) {
