@@ -24,7 +24,7 @@ export default function ModelInfoPage({ setCurrentPage }: ModelInfoPageProps) {
         model: [
             { label: 'Algorithm', value: 'Random Forest (Tuned)', icon: Cpu },
             { label: 'Library', value: 'Scikit-Learn', icon: Database },
-            { label: 'Trained At', value: 'Project Final', icon: Calendar },
+            { label: 'Dataset', value: '70,000 Patient Records', icon: Calendar },
             { label: 'Features', value: '13 Inputs', icon: ListFilter },
         ],
         hyperparameters: [
